@@ -97,6 +97,15 @@
 
       displayManager = {
         lightdm.enable = true;
+        session = [
+          # This session doesn't do anything, but lightdm will fail to
+          # start a session if we don't have at least one set
+          {
+            manage = "desktop";
+            name = "default";
+            start = "";
+          }
+        ];
       };
     };
 
