@@ -8,7 +8,7 @@ let
     sourceRoot = ".";
     src = fetchurl {
       url = "https://www.privateinternetaccess.com/openvpn/openvpn.zip";
-      sha256 = "c1b9abb870a002541237e61bb35f57b1b2db910175b490c2da7679fa1e84b9c5";
+      sha256 = "74ac6ec76cd107e91e8be89d95e186e9c88b842ba80a638d29f23cbfb3d68f0b";
     };
     installPhase = ''
       mkdir -p $out/
