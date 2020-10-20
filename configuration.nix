@@ -1,17 +1,16 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./modules
+  imports = [
+    ./modules
 
-      ./hardware-configuration.nix
-      ./secrets.nix
-      ./vpns
+    ./hardware-configuration.nix
+    ./secrets.nix
+    ./vpns
 
-      # TODO: make these actual options instead of commenting them out
-      ./haruna.nix
-    ];
+    # TODO: make these actual options instead of commenting them out
+    ./haruna.nix
+  ];
 
   boot = {
     cleanTmpDir = true;
@@ -40,6 +39,19 @@
       enp10s0.useDHCP = true;
       wlp8s0.useDHCP = true;
     };
+
+    firewall = {
+      allowedTCPPorts = [
+        22000 # Syncthing
+      ];
+      allowedUDPPorts = [
+        # Syncthing
+        21027
+        # Warframe
+        4970
+        4975
+      ];
+    };
   };
 
   time.timeZone = "Europe/London";
@@ -55,11 +67,11 @@
   };
 
   environment.systemPackages = with pkgs; [
-    git           # To manage the nixos configuration, all users need git
-    home-manager  # To manage the actual user configuration
-    fuse3         # Fuse can't be installed as a user application
-    lightlocker   # Lock screen
-    pavucontrol   # In case the host doesn't use pulseaudio, this can't be in the user config
+    git # To manage the nixos configuration, all users need git
+    home-manager # To manage the actual user configuration
+    fuse3 # Fuse can't be installed as a user application
+    lightlocker # Lock screen
+    pavucontrol # In case the host doesn't use pulseaudio, this can't be in the user config
   ];
 
   programs = {
@@ -71,12 +83,7 @@
   fonts = {
     enableDefaultFonts = true;
 
-    fonts = with pkgs; [
-      hack-font
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-    ];
+    fonts = with pkgs; [ hack-font noto-fonts noto-fonts-cjk noto-fonts-emoji ];
 
     fontconfig = {
       defaultFonts = {
@@ -109,9 +116,7 @@
       };
     };
 
-    udev.packages = with pkgs; [
-      yubikey-personalization
-    ];
+    udev.packages = with pkgs; [ yubikey-personalization ];
 
     pcscd.enable = true;
     flatpak.enable = true;
@@ -121,9 +126,7 @@
 
   xdg.portal = {
     enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-    ];
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     gtkUsePortal = true;
   };
 
@@ -145,17 +148,15 @@
     dates = "weekly";
   };
 
+  nixpkgs.config.allowUnfree = true;
+
   hardware = {
-    bluetooth = {
-      enable = true;
-    };
+    bluetooth = { enable = true; };
     pulseaudio = {
       enable = true;
       package = pkgs.pulseaudioFull;
       extraModules = [ pkgs.pulseaudio-modules-bt ];
     };
-    cpu.intel = {
-      updateMicrocode = true;
-    };
+    cpu.intel = { updateMicrocode = true; };
   };
 }
