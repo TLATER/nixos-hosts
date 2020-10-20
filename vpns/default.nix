@@ -15,17 +15,24 @@ let
       cp c* *.ovpn  $out/
     '';
   };
+  make-pia-vpn = config_path: autoStart: {
+    config = "config \"${vpns}/${config_path}\"";
+    updateResolvConf = true;
+    autoStart = autoStart;
+    authUserPass = {
+      username = config.secrets.pia.user;
+      password = config.secrets.pia.password;
+    };
+  };
 
 in
 {
-  services.openvpn.servers = {
-    Netherlands = {
-      config = "config ${vpns}/Netherlands.ovpn";
-      updateResolvConf = true;
-      authUserPass = {
-        username = config.secrets.pia.user;
-        password = config.secrets.pia.password;
-      };
-    };
-  };
+  services.openvpn.servers = (builtins.listToAttrs (builtins.filter (x: x != null) (map (path: let
+    match = builtins.match "(.*)\\.ovpn" path;
+  in
+    if match == null then null else {
+      name = builtins.replaceStrings [" "] ["_"] (builtins.head match);
+      value = make-pia-vpn path (if match == "Netherlands" then true else false);
+    }
+  ) (builtins.attrNames (builtins.readDir vpns) )) ));
 }
