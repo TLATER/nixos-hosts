@@ -1,21 +1,19 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  imports = [
-    ./modules
-
-    ./hardware-configuration.nix
-    ./secrets.nix
-    ./vpns
-
-    # TODO: make these actual options instead of commenting them out
-    ./haruna.nix
-  ];
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
 
   boot = {
     cleanTmpDir = true;
     plymouth.enable = true;
     kernelPackages = pkgs.linuxPackages_latest;
+
+    initrd.luks.devices.root.allowDiscards = true;
 
     loader = {
       timeout = 0;
@@ -29,31 +27,8 @@
     };
   };
 
-  networking = {
-    hostName = "haruna";
-    wireless.enable = true;
-
-    useDHCP = false;
-    interfaces = {
-      eno1.useDHCP = true;
-      enp10s0.useDHCP = true;
-      wlp8s0.useDHCP = true;
-    };
-
-    firewall = {
-      allowedTCPPorts = [
-        22000 # Syncthing
-      ];
-      allowedUDPPorts = [
-        # Syncthing
-        21027
-        # Warframe
-        4970
-        4975
-      ];
-    };
-  };
-
+  fileSystems = { "/nix".options = [ "defaults" "noatime" ]; };
+  networking.useDHCP = false;
   time.timeZone = "Europe/London";
 
   users = {
@@ -61,7 +36,7 @@
     users = {
       tlater = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "docker" "video" "libvirtd" ];
+        extraGroups = [ "wheel" "video" ];
       };
     };
   };
@@ -69,14 +44,12 @@
   environment.systemPackages = with pkgs; [
     git # To manage the nixos configuration, all users need git
     home-manager # To manage the actual user configuration
-    fuse3 # Fuse can't be installed as a user application
     lightlocker # Lock screen
     pavucontrol # In case the host doesn't use pulseaudio, this can't be in the user config
   ];
 
   programs = {
     dconf.enable = true;
-    light.enable = true;
     zsh.enable = true;
   };
 
@@ -118,6 +91,7 @@
 
     udev.packages = with pkgs; [ yubikey-personalization ];
 
+    chrony.enable = true;
     pcscd.enable = true;
     flatpak.enable = true;
     blueman.enable = true;
@@ -127,36 +101,9 @@
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    gtkUsePortal = true;
   };
 
-  virtualisation = {
-    docker.enable = true;
-    libvirtd.enable = true;
-  };
+  hardware.pulseaudio.enable = true;
 
-  system = {
-    stateVersion = "19.09";
-    autoUpgrade = {
-      enable = true;
-      dates = "weekly";
-    };
-  };
-
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-  };
-
-  nixpkgs.config.allowUnfree = true;
-
-  hardware = {
-    bluetooth = { enable = true; };
-    pulseaudio = {
-      enable = true;
-      package = pkgs.pulseaudioFull;
-      extraModules = [ pkgs.pulseaudio-modules-bt ];
-    };
-    cpu.intel = { updateMicrocode = true; };
-  };
+  system.stateVersion = "20.09";
 }
