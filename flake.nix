@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-20.09";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   outputs = inputs: {
@@ -15,6 +16,20 @@
           (import ./configurations/yui)
           (import ./configurations/bluetooth.nix)
           (import ./configurations/wifi.nix)
+        ];
+        specialArgs = { inherit inputs; };
+      };
+
+      ct-lt-02052 = inputs.nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          (import ./configurations)
+          (import ./configurations/ct-lt-02052)
+          (import ./configurations/bluetooth.nix)
+          (import ./configurations/power.nix)
+          (import ./configurations/wifi.nix)
+
+          inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t490
         ];
         specialArgs = { inherit inputs; };
       };
