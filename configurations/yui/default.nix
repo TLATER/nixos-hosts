@@ -46,4 +46,6 @@ in {
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.cpu.amd.updateMicrocode = true;
+
+  services.openvpn.pia-servers.netherlands.enable = true;
 }

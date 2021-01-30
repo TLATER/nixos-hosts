@@ -19,7 +19,11 @@
             (import ./configurations/bluetooth.nix)
             (import ./configurations/wifi.nix)
           ];
-          specialArgs = { inherit inputs; };
+          extraModules = [ (import ./modules) ];
+          specialArgs = {
+            inherit inputs;
+            tlater-pkgs = (import ./pkgs { pkgs = inputs.nixpkgs.legacyPackages."x86_64-linux"; });
+          };
         };
 
         ct-lt-02052 = inputs.nixpkgs.lib.nixosSystem {
@@ -33,7 +37,11 @@
 
             inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t490
           ];
-          specialArgs = { inherit inputs; };
+          extraModules = [ (import ./modules) ];
+          specialArgs = {
+            inherit inputs;
+            tlater-pkgs = (import ./pkgs { pkgs = inputs.nixpkgs.legacyPackages."x86_64-linux"; });
+          };
         };
       };
     } // (inputs.flake-utils.lib.eachDefaultSystem (system:
