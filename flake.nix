@@ -5,6 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-20.09";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs = inputs: {
@@ -34,5 +35,9 @@
         specialArgs = { inherit inputs; };
       };
     };
-  };
+    } // (inputs.flake-utils.lib.eachDefaultSystem (system:
+      let pkgs = inputs.nixpkgs.legacyPackages.${system};
+      in {
+        devShell = pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };
+      }));
 }
