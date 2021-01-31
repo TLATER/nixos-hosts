@@ -8,6 +8,12 @@
     '';
   };
 
+  sops = {
+    gnupgHome = "/var/lib/sops";
+    defaultSopsFile = ../keys/secrets.yaml;
+    sshKeyPaths = [ ];
+  };
+
   boot = {
     cleanTmpDir = true;
     plymouth.enable = true;

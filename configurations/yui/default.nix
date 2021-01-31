@@ -47,5 +47,10 @@ in {
 
   hardware.cpu.amd.updateMicrocode = true;
 
-  services.openvpn.pia-servers.netherlands.enable = true;
+  sops.secrets.pia = { };
+  services.openvpn.pia-servers.netherlands = {
+    enable = true;
+    autoStart = true;
+    authUserPass = "/run/secrets/pia";
+  };
 }

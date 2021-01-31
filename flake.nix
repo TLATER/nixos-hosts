@@ -6,6 +6,10 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     flake-utils.url = "github:numtide/flake-utils";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs:
@@ -16,7 +20,9 @@
         let pkgs = nixpkgs.legacyPackages.${system};
         in nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [ (import ./configurations) ] ++ modules;
+          modules =
+            [ (import ./configurations) inputs.sops-nix.nixosModules.sops ]
+            ++ modules;
           extraModules = [ (import ./modules) ];
           specialArgs = {
             inherit inputs;
@@ -52,8 +58,14 @@
     }
     # Set up a "dev shell" that will work on all architectures.
     // (inputs.flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = inputs.nixpkgs.legacyPackages.${system};
+      let
+        pkgs = inputs.nixpkgs.legacyPackages.${system};
+        sops-pkgs = inputs.sops-nix.packages.${system};
       in {
-        devShell = pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };
+        devShell = pkgs.mkShell {
+          buildInputs = with pkgs; with sops-pkgs; [ nixfmt sops-init-gpg-key ];
+          nativeBuildInputs = with sops-pkgs; [ sops-pgp-hook ];
+          sopsPGPKeyDirs = [ "./keys/hosts/" "./keys/users/" ];
+        };
       }));
 }
