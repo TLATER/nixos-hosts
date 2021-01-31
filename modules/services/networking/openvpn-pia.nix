@@ -19,8 +19,11 @@ let
   # configurations; trivial, but makes the config section easier to
   # write
   make-pia-vpn = name: config: {
-    inherit (config) autoStart authUserPass;
-    config = ''config "${path-from-name name}"'';
+    inherit (config) autoStart;
+    config = ''
+      config "${path-from-name name}"
+      auth-user-pass ${config.authUserPass}
+    '';
     updateResolvConf = true;
   };
 
@@ -44,26 +47,9 @@ in {
       authUserPass = mkOption {
         default = null;
         description = ''
-          Set the username and password credentials to be used with
-          the "auth-user-pass" authentication method.
-
-          WARNING: Using this option will put the credentials WORLD-READABLE in the Nix store!
+          Set a file from which to read the username/password for the connection.
         '';
-
-        type = types.nullOr (types.submodule {
-          options = {
-            username = mkOption {
-              type = types.str;
-              description = "The PIA username to use.";
-            };
-            password = mkOption {
-              type = types.str;
-              description = "The password to use.";
-            };
-
-          };
-        });
-
+        type = types.nullOr types.path;
       };
     };
   }) servers);
