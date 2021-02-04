@@ -1,22 +1,6 @@
 { pkgs, lib, inputs, ... }:
 
-let
-  allow-nvidia = pkg:
-    builtins.elem (lib.getName pkg) [
-      "nvidia-x11"
-      "nvidia-settings"
-      "nvidia-persistenced"
-    ];
-  overlay-unstable = final: prev: {
-    unstable = import inputs.nixpkgs-unstable {
-      system = prev.system;
-      config.allowUnfreePredicate = allow-nvidia;
-    };
-  };
-
-in {
-  nixpkgs.overlays = [ overlay-unstable ];
-
+{
   imports = [ ./hardware-configuration.nix ];
 
   boot = {
@@ -42,7 +26,6 @@ in {
     };
   };
 
-  nixpkgs.config.allowUnfreePredicate = allow-nvidia;
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.cpu.amd.updateMicrocode = true;
