@@ -1,4 +1,4 @@
-{ config, lib, tlater-pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 let
