@@ -17,17 +17,39 @@
       # A helper function that removes the duplication of things that
       # will be common across all hosts.
       make-nixos-system = { nixpkgs, system, modules ? [ ] }:
-        let pkgs = nixpkgs.legacyPackages.${system};
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+
+          # Set allowed unfree packages
+          allow-nvidia = pkg:
+            builtins.elem (pkgs.lib.getName pkg) [
+              "nvidia-x11"
+              "nvidia-settings"
+              "nvidia-persistenced"
+            ];
+
+          # Overlays to be added to the system
+          overlays = [
+            (final: prev: {
+              tlater = (import ./pkgs { pkgs = prev; });
+              unstable = import inputs.nixpkgs-unstable {
+                inherit system;
+                config.allowUnfreePredicate = allow-nvidia;
+              };
+            })
+          ];
         in nixpkgs.lib.nixosSystem {
           inherit system;
-          modules =
-            [ (import ./configurations) inputs.sops-nix.nixosModules.sops ]
-            ++ modules;
+
+          # The configuration modules
+          modules = [
+            (import ./configurations)
+            inputs.sops-nix.nixosModules.sops
+            ({ ... }: { nixpkgs.overlays = overlays; })
+          ] ++ modules;
+
+          # Additional modules with custom configuration options
           extraModules = [ (import ./modules) ];
-          specialArgs = {
-            inherit inputs;
-            tlater-pkgs = (import ./pkgs { inherit pkgs; });
-          };
         };
 
     in {

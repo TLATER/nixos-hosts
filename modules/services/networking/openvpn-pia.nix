@@ -8,12 +8,12 @@ let
   servers = (builtins.filter (x: x != null) (map (path:
     let match = builtins.match "(.*)\\.ovpn" path;
     in if match == null then null else builtins.head match) (builtins.attrNames
-      (builtins.readDir "${tlater-pkgs.pia-vpn-config}/${pia-dir}"))));
+      (builtins.readDir "${pkgs.tlater.pia-vpn-config}/${pia-dir}"))));
 
   # Little helper to convert a server name back into a configuration file name
   pia-dir = "share/openvpn/configurations/pia";
   path-from-name = name:
-    "${tlater-pkgs.pia-vpn-config}/${pia-dir}/${name}.ovpn";
+    "${pkgs.tlater.pia-vpn-config}/${pia-dir}/${name}.ovpn";
 
   # Create an openvpn server configuration from one of our
   # configurations; trivial, but makes the config section easier to
