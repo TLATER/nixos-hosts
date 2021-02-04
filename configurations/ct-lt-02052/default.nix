@@ -3,8 +3,12 @@
 {
   imports = [ ./hardware-configuration.nix ];
 
-  boot.initrd.luks.devices.root.device =
-    "/dev/disk/by-uuid/b3ac7dc6-cb0b-4350-bdfb-32329a5f61ff";
+  boot.initrd = {
+    availableKernelModules = [ "hid_roccat_ryos" ];
+
+    luks.devices.root.device =
+      "/dev/disk/by-uuid/b3ac7dc6-cb0b-4350-bdfb-32329a5f61ff";
+  };
 
   networking = {
     hostName = "ct-lt-02052";
