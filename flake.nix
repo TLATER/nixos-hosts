@@ -10,6 +10,17 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    home-manager = {
+      url = "github:nix-community/home-manager/release-20.09";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home = {
+      url = "github:tlater/dotfiles";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.flake-utils.follows = "flake-utils";
+    };
   };
 
   outputs = inputs:
@@ -45,7 +56,15 @@
           modules = [
             (import ./configurations)
             inputs.sops-nix.nixosModules.sops
-            ({ ... }: { nixpkgs.overlays = overlays; })
+            inputs.home-manager.nixosModules.home-manager
+
+            ({ config, ... }: {
+              nixpkgs.overlays = overlays;
+              home-manager.useGlobalPkgs = false;
+              home-manager.useUserPackages = true;
+              home-manager.users.tlater =
+                inputs.home.homeConfigurations.${config.networking.hostName};
+            })
           ] ++ modules;
 
           # Additional modules with custom configuration options
