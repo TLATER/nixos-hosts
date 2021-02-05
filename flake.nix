@@ -16,7 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home = {
-      url = "dotfiles";
+      url = "github:tlater/dotfiles";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
       inputs.flake-utils.follows = "flake-utils";
@@ -60,10 +60,6 @@
 
             ({ config, ... }: {
               nixpkgs.overlays = overlays;
-              nix.registry.dotfiles.flake = inputs.home // {
-                url = "/home/tlater/.local/src/dotfiles";
-              };
-
               home-manager.useGlobalPkgs = false;
               home-manager.useUserPackages = true;
               home-manager.users.tlater =
