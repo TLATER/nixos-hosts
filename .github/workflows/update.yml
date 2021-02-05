@@ -23,3 +23,8 @@ jobs:
           git-commit-gpgsign: true
       - run: nix flake update --commit-lock-file --recreate-lock-file
       - uses: peter-evans/create-pull-request@v3
+        with:
+          branch: bot/update
+          delete-branch: true
+          title: Update flake inputs
+
