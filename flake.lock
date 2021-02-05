@@ -29,17 +29,13 @@
         "nurpkgs": "nurpkgs"
       },
       "locked": {
-        "lastModified": 1612489335,
-        "narHash": "sha256-dE8gFYjLteH8b6zfzrxigNssnDJgI5BucNf7uRo62tE=",
-        "owner": "tlater",
-        "repo": "dotfiles",
-        "rev": "b40073590c676ad117516b14423419325f456301",
-        "type": "github"
+        "narHash": "sha256-TOPUm2Q2NYmkZsrt9OsOSWAcnrVUPbN+Wtq7EBJVZ3k=",
+        "path": "/nix/store/c21jqqszjy6pcdww7405w3w18i9qxq2h-source",
+        "type": "path"
       },
       "original": {
-        "owner": "tlater",
-        "repo": "dotfiles",
-        "type": "github"
+        "id": "dotfiles",
+        "type": "indirect"
       }
     },
     "home-manager": {
