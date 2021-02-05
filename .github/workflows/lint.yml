@@ -13,7 +13,8 @@ jobs:
           install_url: https://github.com/numtide/nix-flakes-installer/releases/download/nix-2.4pre20201221_9fab14a/install
           extra_nix_config: |
             experimental-features = nix-command flakes
-      - run: find . -name '*.nix' ! -name 'hardware-configuration.nix' -exec nixfmt -c {} +
+      - run: find . -name '*.nix' ! -name 'hardware-configuration.nix' -exec nix run nixpkgs#nixfmt -- -c {} +
+
   check:
     name: Check nix correctness
     runs-on: ubuntu-latest
