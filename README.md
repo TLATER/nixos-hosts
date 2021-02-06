@@ -36,8 +36,17 @@ update:
 nix flake update
 ```
 
-Subsequent invocations of the installation commands will pull in
-updated software.
+This should run once a week automatically in this repository anyway,
+so can also be replaced with a rebuild (perhaps after a pull).
+
+To include a custom dotfiles flake location, run like so:
+
+```bash
+sudo nixos-rebuild switch\
+    --override-input dotfiles /home/tlater/.local/src/dotfiles\
+    --no-write-lockfile\
+    switch --flake '.#'
+```
 
 ## Preparing a new system
 
