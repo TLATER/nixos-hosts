@@ -1,5 +1,5 @@
 name: lint
-on: pull_request
+on: push
 jobs:
   format:
     name: Check nix file format
