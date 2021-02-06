@@ -29,11 +29,11 @@
         "nurpkgs": "nurpkgs"
       },
       "locked": {
-        "lastModified": 1612489335,
-        "narHash": "sha256-dE8gFYjLteH8b6zfzrxigNssnDJgI5BucNf7uRo62tE=",
+        "lastModified": 1612558258,
+        "narHash": "sha256-Z8nIokYlnQ0BWMaSz6TtadEOoygM1b1WeoSfhNTqN74=",
         "owner": "tlater",
         "repo": "dotfiles",
-        "rev": "b40073590c676ad117516b14423419325f456301",
+        "rev": "0bb7ae0dbb067974d76b981a754f803746eaf780",
         "type": "github"
       },
       "original": {
