@@ -80,7 +80,10 @@
     xserver = {
       enable = true;
       layout = "us";
-      libinput.enable = true;
+      libinput = {
+        enable = true;
+        middleEmulation = false;
+      };
 
       displayManager = {
         lightdm.enable = true;
