@@ -56,6 +56,7 @@
 
   programs = {
     dconf.enable = true;
+    ssh.askPassword = "";
     zsh.enable = true;
   };
 
