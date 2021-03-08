@@ -86,7 +86,13 @@
       };
 
       displayManager = {
-        lightdm.enable = true;
+        lightdm = {
+          enable = true;
+          extraConfig = ''
+            # Create .Xauthority in /var/run/user instead of $HOME
+            user-authority-in-system-dir = true
+          '';
+        };
         session = [
           # This session doesn't do anything, but lightdm will fail to
           # start a session if we don't have at least one set
