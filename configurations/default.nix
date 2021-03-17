@@ -76,6 +76,9 @@
 
   sound.enable = true;
 
+  # See NixOS/nixpkgs#116631
+  systemd.tmpfiles.rules = [ "d /run/lightdm 0711 lightdm lightdm -" ];
+
   services = {
     xserver = {
       enable = true;
