@@ -10,8 +10,9 @@
 
   sops = {
     gnupgHome = "/var/lib/sops";
-    defaultSopsFile = ../keys/secrets.yaml;
+    defaultSopsFile = "/etc/sops/secrets.yaml";
     sshKeyPaths = [ ];
+    validateSopsFiles = false;
   };
 
   boot = {
