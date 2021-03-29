@@ -18,6 +18,40 @@
     };
   };
 
+  sops.secrets = {
+    codethink-vpn-ca = { };
+    codethink-vpn-cert = { };
+    codethink-vpn-key = { };
+    codethink-vpn-static-key = { };
+  };
+
+  services.openvpn = {
+    servers = {
+      codethink = {
+        autoStart = false;
+        config = ''
+          # This is an OpenVPN Client file.
+          # Have a look at https://wiki.codethink.co.uk/base/operations/vpn/
+          # to see how your VPN should be set up :)
+          client
+          dev tap
+          proto udp
+          remote vpn.codethink.co.uk 1194
+          ca /run/secrets/codethink-vpn-ca
+          cert /run/secrets/codethink-vpn-cert
+          key /run/secrets/codethink-vpn-key
+          resolv-retry infinite
+          nobind
+          compress lzo
+          comp-lzo yes
+          remote-cert-tls server
+          tls-auth /run/secrets/codethink-vpn-static-key
+          key-direction 1
+        '';
+      };
+    };
+  };
+
   environment.systemPackages = with pkgs; [
     docker-compose # Better to keep it in lock-step with the system docker
     fuse3 # For bst and related things
