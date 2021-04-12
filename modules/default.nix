@@ -1,5 +1,8 @@
 { lib, pkgs, config, ... }:
 
 {
-  imports = [ ./services/networking/openvpn-pia.nix ];
+  imports = [
+    ./hardware/pulseaudio/echo-canceling.nix
+    ./services/networking/openvpn-pia.nix
+  ];
 }
