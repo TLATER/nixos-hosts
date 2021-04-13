@@ -4,7 +4,7 @@
   imports = [ ./hardware-configuration.nix ];
 
   boot = {
-    kernelPackages = lib.mkOverride 99 pkgs.unstable.linuxPackages_5_10;
+    kernelPackages = lib.mkOverride 99 pkgs.unstable.linuxPackages_latest;
 
     initrd = {
       availableKernelModules = [ "hid_roccat_ryos" ];
