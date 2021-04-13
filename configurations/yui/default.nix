@@ -24,6 +24,9 @@
       eno1.useDHCP = true;
       wlp7s0.useDHCP = true;
     };
+
+    # Allow barrier
+    firewall.allowedTCPPorts = [ 24800 ];
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
