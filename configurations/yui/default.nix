@@ -28,7 +28,19 @@
 
   services.xserver.videoDrivers = [ "nvidia" ];
 
-  hardware.cpu.amd.updateMicrocode = true;
+  hardware = {
+    pulseaudio = {
+      rnnoise-suppression = {
+        enable = true;
+        source =
+          "alsa_input.usb-Blue_Microphones_Blue_Snowball_2029BAA0FBM8-00.analog-stereo";
+        suppression-type = "stereo";
+        voice-threshold = 60;
+      };
+    };
+
+    cpu.amd.updateMicrocode = true;
+  };
 
   sops.secrets.pia = { };
   services.openvpn.pia-servers.netherlands = {
