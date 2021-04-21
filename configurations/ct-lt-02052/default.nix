@@ -48,6 +48,7 @@
           tls-auth /run/secrets/codethink-vpn-static-key
           key-direction 1
         '';
+        updateResolvConf = true;
       };
     };
   };
