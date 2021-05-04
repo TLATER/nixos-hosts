@@ -3,6 +3,12 @@
 {
   imports = [ ./hardware-configuration.nix ];
 
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (pkgs.lib.getName pkg) [
+      # Required to get the steam controller to work (i.e., for hardware.steam-hardware)
+      "steam-original"
+    ];
+
   boot = {
     kernelPackages = lib.mkOverride 99 pkgs.unstable.linuxPackages_latest;
 
@@ -42,6 +48,7 @@
       };
     };
 
+    steam-hardware.enable = true;
     cpu.amd.updateMicrocode = true;
   };
 
