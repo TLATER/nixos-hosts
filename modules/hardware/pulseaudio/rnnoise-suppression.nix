@@ -95,7 +95,6 @@ in {
             ''source_properties="device.description='Noise\-Suppressed Input'"''
             "master=${cfg.source}.denoised.monitor"
             "channels=${number-of-channels}"
-            "remix=false"
           ]
         }
       '';
