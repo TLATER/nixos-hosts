@@ -23,7 +23,8 @@
     };
   };
 
-  outputs = inputs:
+  outputs = { nixpkgs, nixpkgs-unstable, nixos-hardware, flake-utils, sops-nix
+    , home-manager, dotfiles, ... }:
     let
       # A helper function that removes the duplication of things that
       # will be common across all hosts.
@@ -43,7 +44,7 @@
           overlays = [
             (final: prev: {
               tlater = (import ./pkgs { pkgs = prev; });
-              unstable = import inputs.nixpkgs-unstable {
+              unstable = import nixpkgs-unstable {
                 inherit system;
                 config.allowUnfreePredicate = allow-nvidia;
               };
@@ -55,15 +56,15 @@
           # The configuration modules
           modules = [
             (import ./configurations)
-            inputs.sops-nix.nixosModules.sops
-            inputs.home-manager.nixosModules.home-manager
+            sops-nix.nixosModules.sops
+            home-manager.nixosModules.home-manager
 
             ({ config, ... }: {
               nixpkgs.overlays = overlays;
               home-manager.useGlobalPkgs = false;
               home-manager.useUserPackages = true;
               home-manager.users.tlater =
-                inputs.dotfiles.homeConfigurations.${config.networking.hostName};
+                dotfiles.homeConfigurations.${config.networking.hostName};
             })
           ] ++ modules;
 
@@ -74,7 +75,7 @@
     in {
       nixosConfigurations = {
         yui = make-nixos-system {
-          nixpkgs = inputs.nixpkgs;
+          nixpkgs = nixpkgs;
           system = "x86_64-linux";
           modules = [
             (import ./configurations/yui)
@@ -84,7 +85,7 @@
         };
 
         ct-lt-02052 = make-nixos-system {
-          nixpkgs = inputs.nixpkgs;
+          nixpkgs = nixpkgs;
           system = "x86_64-linux";
           modules = [
             (import ./configurations/ct-lt-02052)
@@ -92,16 +93,16 @@
             (import ./configurations/power.nix)
             (import ./configurations/wifi.nix)
 
-            inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t490
+            nixos-hardware.nixosModules.lenovo-thinkpad-t490
           ];
         };
       };
     }
     # Set up a "dev shell" that will work on all architectures.
-    // (inputs.flake-utils.lib.eachDefaultSystem (system:
+    // (flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = inputs.nixpkgs.legacyPackages.${system};
-        sops-pkgs = inputs.sops-nix.packages.${system};
+        pkgs = nixpkgs.legacyPackages.${system};
+        sops-pkgs = sops-nix.packages.${system};
       in {
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; with sops-pkgs; [ nixfmt sops-init-gpg-key ];
