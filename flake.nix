@@ -33,7 +33,9 @@
         let
           pkgs = nixpkgs.legacyPackages.${system};
 
-          # Set allowed unfree packages
+          # Set allowed unfree packages on unstable; this can't be
+          # done where they are used sadly because it's used as an
+          # overlay.
           allow-nvidia = pkg:
             builtins.elem (pkgs.lib.getName pkg) [
               "nvidia-x11"
@@ -74,8 +76,6 @@
           system = "x86_64-linux";
           modules = [
             (import ./configurations/yui)
-            (import ./configurations/bluetooth.nix)
-            (import ./configurations/wifi.nix)
             (dotfiles.lib.nixosConfigurationFromProfile
               dotfiles.profiles.pcs.personal "tlater")
           ];
@@ -86,9 +86,6 @@
           system = "x86_64-linux";
           modules = [
             (import ./configurations/ct-lt-02052)
-            (import ./configurations/bluetooth.nix)
-            (import ./configurations/power.nix)
-            (import ./configurations/wifi.nix)
             (dotfiles.lib.nixosConfigurationFromProfile
               dotfiles.profiles.pcs.work "tlater")
 

@@ -1,7 +1,8 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports =
+    [ ./hardware-configuration.nix ../bluetooth.nix ../power.nix ../wifi.nix ];
 
   boot.initrd = {
     availableKernelModules = [ "hid_roccat_ryos" ];
