@@ -8,6 +8,11 @@
     '';
   };
 
+  home-manager = {
+    useGlobalPkgs = false;
+    useUserPackages = true;
+  };
+
   sops = {
     gnupgHome = "/var/lib/sops";
     defaultSopsFile = "/etc/sops/secrets.yaml";

@@ -18,6 +18,7 @@
     dotfiles = {
       url = "github:tlater/dotfiles";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
       inputs.home-manager.follows = "home-manager";
       inputs.flake-utils.follows = "flake-utils";
     };
@@ -59,13 +60,7 @@
             sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
 
-            ({ config, ... }: {
-              nixpkgs.overlays = overlays;
-              home-manager.useGlobalPkgs = false;
-              home-manager.useUserPackages = true;
-              home-manager.users.tlater =
-                dotfiles.homeConfigurations.${config.networking.hostName};
-            })
+            ({ ... }: { nixpkgs.overlays = overlays; })
           ] ++ modules;
 
           # Additional modules with custom configuration options
@@ -81,6 +76,8 @@
             (import ./configurations/yui)
             (import ./configurations/bluetooth.nix)
             (import ./configurations/wifi.nix)
+            (dotfiles.lib.nixosConfigurationFromProfile
+              dotfiles.profiles.pcs.personal "tlater")
           ];
         };
 
@@ -92,6 +89,8 @@
             (import ./configurations/bluetooth.nix)
             (import ./configurations/power.nix)
             (import ./configurations/wifi.nix)
+            (dotfiles.lib.nixosConfigurationFromProfile
+              dotfiles.profiles.pcs.work "tlater")
 
             nixos-hardware.nixosModules.lenovo-thinkpad-t490
           ];
