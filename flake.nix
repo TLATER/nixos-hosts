@@ -2,8 +2,7 @@
   description = "tlater's host configurations";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-20.09";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-21.05";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     flake-utils.url = "github:numtide/flake-utils";
     sops-nix = {
@@ -12,20 +11,19 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-20.09";
+      url = "github:nix-community/home-manager/release-21.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     dotfiles = {
       url = "github:tlater/dotfiles";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
       inputs.home-manager.follows = "home-manager";
       inputs.flake-utils.follows = "flake-utils";
     };
   };
 
-  outputs = { nixpkgs, nixpkgs-unstable, nixos-hardware, flake-utils, sops-nix
-    , home-manager, dotfiles, ... }:
+  outputs = { nixpkgs, nixos-hardware, flake-utils, sops-nix, home-manager
+    , dotfiles, ... }:
     let
       # A helper function that removes the duplication of things that
       # will be common across all hosts.
@@ -33,26 +31,9 @@
         let
           pkgs = nixpkgs.legacyPackages.${system};
 
-          # Set allowed unfree packages on unstable; this can't be
-          # done where they are used sadly because it's used as an
-          # overlay.
-          allow-nvidia = pkg:
-            builtins.elem (pkgs.lib.getName pkg) [
-              "nvidia-x11"
-              "nvidia-settings"
-              "nvidia-persistenced"
-            ];
-
           # Overlays to be added to the system
-          overlays = [
-            (final: prev: {
-              tlater = (import ./pkgs { pkgs = prev; });
-              unstable = import nixpkgs-unstable {
-                inherit system;
-                config.allowUnfreePredicate = allow-nvidia;
-              };
-            })
-          ];
+          overlays =
+            [ (final: prev: { tlater = (import ./pkgs { pkgs = prev; }); }) ];
         in nixpkgs.lib.nixosSystem {
           inherit system;
 

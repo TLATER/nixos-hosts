@@ -1,4 +1,4 @@
-{ stdenv, fetchzip, ... }:
+{ lib, stdenv, fetchzip, ... }:
 
 let version = "ZA8RS6eIjMVQfBt+9hYyhaq8LByy5oJaO9Ed+x8KtW8=";
 
@@ -17,7 +17,7 @@ in stdenv.mkDerivation {
     cp c* *.ovpn $out/share/openvpn/configurations/pia/
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     inherit version;
     description = "Upstream openvpn configurations for PIA";
     homepage = "https://www.privateinternetaccess.com";

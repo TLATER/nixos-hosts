@@ -10,9 +10,6 @@
     ];
 
   boot = {
-    # Work around https://github.com/NixOS/nixpkgs/issues/124709
-    kernelPackages = lib.mkOverride 99 pkgs.unstable.linuxPackages_latest;
-
     initrd = {
       availableKernelModules = [ "hid_roccat_ryos" ];
       luks.devices = {

@@ -91,7 +91,7 @@
       layout = "us";
       libinput = {
         enable = true;
-        middleEmulation = false;
+        mouse.middleEmulation = false;
       };
 
       displayManager = {
