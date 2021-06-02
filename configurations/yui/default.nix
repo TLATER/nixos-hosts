@@ -7,6 +7,9 @@
     builtins.elem (pkgs.lib.getName pkg) [
       # Required to get the steam controller to work (i.e., for hardware.steam-hardware)
       "steam-original"
+      "nvidia-x11"
+      "nvidia-settings"
+      "nvidia-persistenced"
     ];
 
   boot = {
