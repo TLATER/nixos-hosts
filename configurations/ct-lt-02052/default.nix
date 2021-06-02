@@ -68,4 +68,8 @@
 
   hardware.cpu.intel.updateMicrocode = true;
   security.pki.certificates = [ (builtins.readFile ./codethink-wifi.cert) ];
+
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (pkgs.lib.getName pkg) [ "steam-original" ];
+  hardware.steam-hardware.enable = true;
 }
