@@ -43,7 +43,16 @@
             sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
 
-            ({ ... }: { nixpkgs.overlays = overlays; })
+            ({ ... }: {
+              nix.registry.nixpkgs = {
+                from = {
+                  id = "nixpkgs";
+                  type = "indirect";
+                };
+                flake = nixpkgs;
+              };
+              nixpkgs.overlays = overlays;
+            })
           ] ++ modules;
 
           # Additional modules with custom configuration options
