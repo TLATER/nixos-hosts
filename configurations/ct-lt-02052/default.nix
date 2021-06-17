@@ -17,6 +17,7 @@
       enp0s31f6.useDHCP = true;
       wlp0s20f3.useDHCP = true;
     };
+    wireless.interfaces = [ "wlp0s20f3" ];
   };
 
   sops.secrets = {

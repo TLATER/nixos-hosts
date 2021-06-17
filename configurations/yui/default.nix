@@ -32,6 +32,8 @@
       wlp7s0.useDHCP = true;
     };
 
+    wireless.interfaces = [ "wlp7s0" ];
+
     # Allow barrier
     firewall.allowedTCPPorts = [ 24800 ];
   };
