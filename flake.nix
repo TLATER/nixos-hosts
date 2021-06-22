@@ -44,13 +44,18 @@
             home-manager.nixosModules.home-manager
 
             ({ ... }: {
-              nix.registry.nixpkgs = {
-                from = {
-                  id = "nixpkgs";
-                  type = "indirect";
+              # Use the flakes' nixpkgs for commands
+              nix = {
+                nixPath = [ "nixpkgs=${nixpkgs}" ];
+                registry.nixpkgs = {
+                  from = {
+                    id = "nixpkgs";
+                    type = "indirect";
+                  };
+                  flake = nixpkgs;
                 };
-                flake = nixpkgs;
               };
+
               nixpkgs.overlays = overlays;
             })
           ] ++ modules;
