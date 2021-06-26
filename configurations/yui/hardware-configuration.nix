@@ -38,6 +38,11 @@
       fsType = "ext4";
     };
 
+  fileSystems."/var/lib/flatpak" =
+    { device = "/dev/disk/by-uuid/c08b4434-a464-4ff4-99fb-9724576bfe88";
+      fsType = "ext4";
+    };
+
   swapDevices =
     [ { device = "/dev/disk/by-uuid/e622a760-a23b-403c-91bd-5280edeb69f5"; }
     ];
