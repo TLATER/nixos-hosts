@@ -82,8 +82,14 @@
 
   sound.enable = true;
 
-  # See NixOS/nixpkgs#116631
-  systemd.tmpfiles.rules = [ "d /run/lightdm 0711 lightdm lightdm -" ];
+  systemd = {
+    # See NixOS/nixpkgs#116631
+    tmpfiles.rules = [ "d /run/lightdm 0711 lightdm lightdm -" ];
+
+    # My systems never have usable root accounts anyway, so emergency
+    # mode just drops into a shell telling me it can't log into root
+    enableEmergencyMode = false;
+  };
 
   services = {
     xserver = {
