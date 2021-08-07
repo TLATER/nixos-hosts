@@ -12,11 +12,13 @@ jobs:
         with:
           fetch-depth: 0
           ssh-key: ${{ secrets.PR_CREATE_KEY }}
-      - uses: cachix/install-nix-action@v12
+      - uses: cachix/install-nix-action@v13
         with:
-          install_url: https://github.com/numtide/nix-flakes-installer/releases/download/nix-2.4pre20201221_9fab14a/install
+          install_url: https://nixos-nix-install-tests.cachix.org/serve/i6laym9jw3wg9mw6ncyrk6gjx4l34vvx/install
+          install_options: '--tarball-url-prefix https://nixos-nix-install-tests.cachix.org/serve'
           extra_nix_config: |
             experimental-features = nix-command flakes
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
       - uses: crazy-max/ghaction-import-gpg@v3
         with:
           gpg-private-key: ${{ secrets.GIT_SIGNING_KEY }}
@@ -29,7 +31,8 @@ jobs:
       - run: nix build -o after-update .#nixosConfigurations.yui.config.system.build.toplevel
       - run: nix run gitlab:khumba/nvd -- diff before-update after-update > version-diff
       - run: rm before-update after-update
-      - run: git commit -am 'flake.lock: Update' -m '' -m "$(cat version-diff)"
+      - run: |
+          git commit -am 'flake.lock: Update' -m '' -m "$(cat version-diff)"
       - uses: peter-evans/create-pull-request@v3
         with:
           branch: bot/update
