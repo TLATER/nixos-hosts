@@ -24,7 +24,12 @@ jobs:
           git-commit-gpgsign: true
           git-committer-name: GitHub automation
           git-committer-email: tm@tlater.net
-      - run: nix flake update --commit-lock-file --recreate-lock-file
+      - run: nix build -o before-update .#nixosConfigurations.yui.config.system.build.toplevel
+      - run: nix flake update
+      - run: nix build -o after-update .#nixosConfigurations.yui.config.system.build.toplevel
+      - run: nix run gitlab:khumba/nvd -- diff before-update after-update > version-diff
+      - run: rm before-update after-update
+      - run: git commit -am 'flake.lock: Update' -m '' -m "$(cat version-diff)"
       - uses: peter-evans/create-pull-request@v3
         with:
           branch: bot/update
