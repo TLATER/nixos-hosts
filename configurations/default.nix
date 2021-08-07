@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
 {
+  imports = [ ./pipewire.nix ];
+
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
@@ -57,7 +59,7 @@
     git # To manage the nixos configuration, all users need git
     home-manager # To manage the actual user configuration
     lightlocker # Lock screen
-    pavucontrol # In case the host doesn't use pulseaudio, this can't be in the user config
+    pavucontrol # In case the host doesn't have audio, this can't be in the user config
   ];
 
   programs = {
@@ -79,8 +81,6 @@
       };
     };
   };
-
-  sound.enable = true;
 
   systemd = {
     # See NixOS/nixpkgs#116631
@@ -125,7 +125,6 @@
     chrony.enable = true;
     pcscd.enable = true;
     flatpak.enable = true;
-    blueman.enable = true;
     fstrim.enable = true;
   };
 
@@ -133,8 +132,6 @@
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
-
-  hardware.pulseaudio.enable = true;
 
   system.stateVersion = "20.09";
 }

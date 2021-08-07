@@ -41,16 +41,6 @@
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware = {
-    pulseaudio = {
-      rnnoise-suppression = {
-        enable = true;
-        source =
-          "alsa_input.usb-Blue_Microphones_Blue_Snowball_2029BAA0FBM8-00.analog-stereo";
-        suppression-type = "stereo";
-        voice-threshold = 60;
-      };
-    };
-
     steam-hardware.enable = true;
     cpu.amd.updateMicrocode = true;
   };

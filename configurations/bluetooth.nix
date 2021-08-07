@@ -1,11 +1,6 @@
 { pkgs, ... }:
 
 {
-  hardware = {
-    pulseaudio = {
-      package = pkgs.pulseaudioFull;
-      extraModules = [ pkgs.pulseaudio-modules-bt ];
-    };
-    bluetooth.enable = true;
-  };
+  services.blueman.enable = true;
+  hardware.bluetooth.enable = true;
 }
