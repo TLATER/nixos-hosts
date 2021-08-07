@@ -26,12 +26,18 @@ jobs:
           git-commit-gpgsign: true
           git-committer-name: GitHub automation
           git-committer-email: tm@tlater.net
-      - run: nix build -o before-update .#nixosConfigurations.yui.config.system.build.toplevel
-      - run: nix flake update
-      - run: nix build -o after-update .#nixosConfigurations.yui.config.system.build.toplevel
-      - run: nix run gitlab:khumba/nvd -- diff before-update after-update > version-diff
-      - run: rm before-update after-update
-      - run: |
+      - name: Build reference pre-update system to compare to
+        run: nix build -o before-update .#nixosConfigurations.yui.config.system.build.toplevel
+      - name: Update flake inputs
+        run: nix flake update
+      - name: Build system to compare to pre-update system
+        run: nix build -o after-update .#nixosConfigurations.yui.config.system.build.toplevel
+      - name: Create version diff
+        run: nix run gitlab:khumba/nvd -- diff before-update after-update > version-diff
+      - name: Clean symlinks we don't want to commit
+        run: rm before-update after-update
+      - name: Commit changes
+        run: |
           git commit -am 'flake.lock: Update' -m '' -m "$(cat version-diff)"
       - uses: peter-evans/create-pull-request@v3
         with:
