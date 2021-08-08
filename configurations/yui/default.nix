@@ -29,10 +29,10 @@
     hostName = "yui";
     interfaces = {
       eno1.useDHCP = true;
-      wlp7s0.useDHCP = true;
+      wlp6s0.useDHCP = true;
     };
 
-    wireless.interfaces = [ "wlp7s0" ];
+    wireless.interfaces = [ "wlp6s0" ];
 
     # Allow barrier
     firewall.allowedTCPPorts = [ 24800 ];
