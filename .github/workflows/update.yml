@@ -27,11 +27,11 @@ jobs:
           git-committer-name: GitHub automation
           git-committer-email: tm@tlater.net
       - name: Build reference pre-update system to compare to
-        run: nix build -o before-update .#nixosConfigurations.yui.config.system.build.toplevel
+        run: nix build -o before-update .#nixosConfigurations.ct-lt-02052.config.system.build.toplevel
       - name: Update flake inputs
         run: nix flake update
       - name: Build system to compare to pre-update system
-        run: nix build -o after-update .#nixosConfigurations.yui.config.system.build.toplevel
+        run: nix build -o after-update .#nixosConfigurations.ct-lt-02052.config.system.build.toplevel
       - name: Create version diff
         run: nix run --no-write-lock-file gitlab:khumba/nvd -- diff before-update after-update > version-diff
       - name: Clean symlinks we don't want to commit
