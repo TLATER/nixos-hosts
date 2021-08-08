@@ -1,0 +1,50 @@
+<<< before-update
+>>> after-update
+Version changes:
+[U.]  #01  acpi-call               1.2.1-5.12.17 -> 1.2.1-5.13.7
+[U.]  #02  bat                     0.18.1 -> 0.18.2
+[C.]  #03  boehm-gc                8.0.4 x2 -> 8.0.4 x3
+[U.]  #04  buster-captcha-solver   1.2.0 -> 1.2.2
+[U*]  #05  cpupower                5.12.17 -> 5.13.7
+[U*]  #06  docker                  20.10.2, 20.10.2-man -> 20.10.7, 20.10.7-man
+[U.]  #07  docker-containerd       20.10.2 -> 20.10.7
+[U.]  #08  docker-init             20.10.2 -> 20.10.7
+[U.]  #09  docker-runc             20.10.2 -> 20.10.7
+[U.]  #10  feh                     3.7, 3.7-man -> 3.7.1, 3.7.1-man
+[U.]  #11  firefox                 90.0 -> 90.0.2
+[U.]  #12  firefox-ui-fix          9c8b53fdc27f5a20edcfc9248670adce222ba1f0 -> 75709e2543c9da7fb65aa7affd6142e2a6e037ed
+[U.]  #13  firefox-unwrapped       90.0 -> 90.0.2
+[U.]  #14  initrd-linux            5.12.17 -> 5.13.7
+[U.]  #15  libgcrypt               1.9.2 -> 1.9.3
+[U.]  #16  linux                   5.12.17, 5.12.17-modules-shrunk -> 5.13.7, 5.13.7-modules-shrunk
+[U.]  #17  mesa                    21.0.1, 21.0.1-drivers -> 21.1.4, 21.1.4-drivers
+[U.]  #18  moby                    20.10.2 -> 20.10.7
+[U.]  #19  networkmanager          1.30.4 -> 1.30.6
+[C*]  #20  nix                     2.3.12, 2.3.12-man, 2.4pre20210601_5985b8b, 2.4pre20210601_5985b8b-doc, 2.4pre20210601_5985b8b-man -> 2.3.15, 2.3.15-man, 2.4pre20210707_02dd6bb, 2.4pre20210707_02dd6bb-doc, 2.4pre20210707_02dd6bb-man
+[U.]  #21  nixos-system-ct-lt      02052-21.05.20210721.63ee5cd -> 02052-21.05.20210805.733682c
+[U.]  #22  react-devtools          4.13.5 -> 4.14.0
+[U*]  #23  strace                  5.12 -> 5.13
+[U.]  #24  ublock-origin           1.36.2 -> 1.37.2
+[C.]  #25  udev-rules              <none> -> <none> x2
+[U.]  #26  x86_energy_perf_policy  5.10.50 -> 5.10.52
+Added packages:
+[A.]  #01  docker-buildx                                             0.5.1
+[A.]  #02  emacs-bazel                                               20210516.1724
+[A.]  #03  emacs-groovy-mode                                         20210510.317
+[A.]  #04  emacs-haskell-mode                                        20210507.2243
+[A.]  #05  emacs-kotlin-mode                                         20200925.1541
+[A.]  #06  initrd-fsinfo                                             <none>
+[A.]  #07  jxdqnrhqrpqyzl9vfjgm2hcca5r67sim-source                   <none>
+[A.]  #08  keymap                                                    <none>
+[A.]  #09  link-units                                                <none>
+[A.]  #10  oh-my-zsh-emacs                                           9c34c359c4c1ebb1bd0211d40c3bca0c6aa2ca97 x2
+[A.]  #11  oh-my-zsh-screen                                          9c34c359c4c1ebb1bd0211d40c3bca0c6aa2ca97
+[A.]  #12  rtw89-firmware-unstable                                   2021-07-03
+[A.]  #13  stage                                                     1-init.sh
+[A.]  #14  tridactyl-emacs-abc05ae33d282dc8fb999f0706efe406766ed9dc  <none>
+Removed packages:
+[R.]  #1  oh-my-zsh-emacs-dac3314c76e799cddbbe5cf63870d31861626059   <none> x2
+[R.]  #2  oh-my-zsh-screen-dac3314c76e799cddbbe5cf63870d31861626059  <none>
+[R.]  #3  tridactyl-emacs-d1475505eead8e5bc70526190f3ff72c6d6ebbc2   <none>
+[R.]  #4  vsng31a7ijm6as8b30mfgqmryaigcwn4-source                    <none>
+Closure size: 1418 -> 1430 (884 paths added, 872 paths removed, delta +12).
