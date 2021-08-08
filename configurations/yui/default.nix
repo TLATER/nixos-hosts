@@ -13,6 +13,12 @@
     ];
 
   boot = {
+    blacklistedKernelModules = [
+      # Used for IPMI (remote maintenance thing), but is unsupported
+      # by motherboard.
+      "sp5100_tco"
+    ];
+
     initrd = {
       availableKernelModules = [ "hid_roccat_ryos" ];
       luks.devices = {
