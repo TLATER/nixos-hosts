@@ -126,6 +126,7 @@
     pcscd.enable = true;
     flatpak.enable = true;
     fstrim.enable = true;
+    fwupd.enable = true;
   };
 
   xdg.portal = {
