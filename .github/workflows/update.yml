@@ -33,7 +33,7 @@ jobs:
       - name: Build system to compare to pre-update system
         run: nix build -o after-update .#nixosConfigurations.ct-lt-02052.config.system.build.toplevel
       - name: Create version diff
-        run: nix run gitlab:khumba/nvd -- diff before-update after-update > version-diff
+        run: nix run --no-write-lock-file gitlab:khumba/nvd -- diff before-update after-update > version-diff
       - name: Clean symlinks we don't want to commit
         run: rm before-update after-update
       - name: Commit changes
