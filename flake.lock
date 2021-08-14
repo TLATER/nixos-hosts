@@ -15,11 +15,11 @@
         "nvfetcher": "nvfetcher"
       },
       "locked": {
-        "lastModified": 1628537339,
-        "narHash": "sha256-DmTejZROQn7txMpO8wpNor2gfo8cSXZClYsSy4O5FvE=",
+        "lastModified": 1628954749,
+        "narHash": "sha256-XKwQq1T5uebyds1aO3dKCHJxoFeG0TEACXT4xw/O9To=",
         "owner": "tlater",
         "repo": "dotfiles",
-        "rev": "fc64f403000ce3f5914edf72911a4db4b5d88d68",
+        "rev": "40fa3693aa265c46271aac47a533a875a858bd36",
         "type": "github"
       },
       "original": {
