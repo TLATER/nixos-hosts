@@ -50,11 +50,4 @@
     steam-hardware.enable = true;
     cpu.amd.updateMicrocode = true;
   };
-
-  sops.secrets.pia = { };
-  services.openvpn.pia-servers.netherlands = {
-    enable = true;
-    autoStart = true;
-    authUserPass = "/run/secrets/pia";
-  };
 }
