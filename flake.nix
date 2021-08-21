@@ -90,15 +90,22 @@
       };
     }
     # Set up a "dev shell" that will work on all architectures.
-    // (flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-        sops-pkgs = sops-nix.packages.${system};
-      in {
-        devShell = pkgs.mkShell {
-          buildInputs = with pkgs; with sops-pkgs; [ nixfmt sops-init-gpg-key ];
-          nativeBuildInputs = with sops-pkgs; [ sops-import-keys-hook ];
-          sopsPGPKeyDirs = [ "./keys/hosts/" "./keys/users/" ];
-        };
-      }));
+    // (flake-utils.lib.eachSystem
+      # Sops currently doesn't support aarch64-darwin
+      (builtins.filter (system: system != "aarch64-darwin")
+        flake-utils.lib.defaultSystems) (system:
+          let
+            pkgs = nixpkgs.legacyPackages.${system};
+            sops-pkgs = sops-nix.packages.${system};
+          in {
+            devShell = pkgs.mkShell {
+              buildInputs = with pkgs;
+                with sops-pkgs; [
+                  nixfmt
+                  sops-init-gpg-key
+                ];
+              nativeBuildInputs = with sops-pkgs; [ sops-import-keys-hook ];
+              sopsPGPKeyDirs = [ "./keys/hosts/" "./keys/users/" ];
+            };
+          }));
 }
