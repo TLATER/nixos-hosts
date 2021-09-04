@@ -47,6 +47,7 @@
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware = {
+    nvidia.modesetting.enable = true;
     steam-hardware.enable = true;
     cpu.amd.updateMicrocode = true;
   };
