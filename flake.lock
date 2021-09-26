@@ -15,11 +15,11 @@
         "nvfetcher": "nvfetcher"
       },
       "locked": {
-        "lastModified": 1630528616,
-        "narHash": "sha256-lhanA0AdiqTRlHc1ORu1Tr8J0ZnjCSr43RFN84TadHU=",
+        "lastModified": 1632515686,
+        "narHash": "sha256-2MZeckNoJQGajUFOhZCjJPR5VZRa+JqW7Ylwr8i8vOU=",
         "owner": "tlater",
         "repo": "dotfiles",
-        "rev": "0e9f0e9b53cc412f0d58dcd1e98b144adc44afb4",
+        "rev": "dab1743486c0d48cddb520e736c91a2494e312be",
         "type": "github"
       },
       "original": {
@@ -114,11 +114,11 @@
     },
     "nurpkgs": {
       "locked": {
-        "lastModified": 1630113692,
-        "narHash": "sha256-bLZWXyvssmaRoe0C0E2xbybyQ2YpCFNErVZl5+WJ8Fg=",
+        "lastModified": 1631325868,
+        "narHash": "sha256-o/aa42clbMJFWv6b+VEVjrC70QwdiUwOJa2zPeOrxoI=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "3c9ab0490e0f0c7aa828367b8e7ca0ded35a5b2a",
+        "rev": "de3eb9e88bd4c57e5bc90106a40378fc2cab6026",
         "type": "github"
       },
       "original": {
