@@ -16,9 +16,12 @@
   };
 
   sops = {
-    gnupgHome = "/var/lib/sops";
+    gnupg = {
+      home = "/var/lib/sops";
+      sshKeyPaths = [ ];
+    };
+
     defaultSopsFile = "/etc/sops/secrets.yaml";
-    sshKeyPaths = [ ];
     validateSopsFiles = false;
   };
 
