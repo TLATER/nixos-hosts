@@ -11,15 +11,16 @@
         "nixpkgs": [
           "nixpkgs"
         ],
+        "nixpkgs-unstable": "nixpkgs-unstable",
         "nurpkgs": "nurpkgs",
         "nvfetcher": "nvfetcher"
       },
       "locked": {
-        "lastModified": 1633809537,
-        "narHash": "sha256-NUwynTr7JEvT8oZenEVnDabI3NGFU9jTA5MWWZA8FOg=",
+        "lastModified": 1634418323,
+        "narHash": "sha256-OUUSd4YABDu/AY3xLXbMu3Ls0WJNV3VU5iibZ0xHOUc=",
         "owner": "tlater",
         "repo": "dotfiles",
-        "rev": "ed25ed85a55191cd699156eff2e04b677a91d2d1",
+        "rev": "936071d8b6930d25e46b7ab7f7cbd647ac4a0d35",
         "type": "github"
       },
       "original": {
@@ -112,13 +113,29 @@
         "type": "github"
       }
     },
+    "nixpkgs-unstable": {
+      "locked": {
+        "lastModified": 1633422745,
+        "narHash": "sha256-gA6Ok64nPbkjHk3Oanq4641EeYkjcKhisDF9wBjLxEk=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "8e1eab9eae4278c9bb1dcae426848a581943db5a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nurpkgs": {
       "locked": {
-        "lastModified": 1633744644,
-        "narHash": "sha256-aFSd9osCGQJjGmssRt5ysJNpnXcpVTGEzwcE1xhXcac=",
+        "lastModified": 1634412707,
+        "narHash": "sha256-ilPwLh8zo8tR96mH4Rkq/IHOnYnJjvoNqS92ZGHIoQg=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "a99baa2b37fef031f2b69f3376d1a59d55c6e41a",
+        "rev": "ddfd950ab439c0cbc799896072d0bc28f6a8536f",
         "type": "github"
       },
       "original": {
@@ -131,18 +148,20 @@
       "inputs": {
         "flake-compat": "flake-compat",
         "flake-utils": [
+          "dotfiles",
           "flake-utils"
         ],
         "nixpkgs": [
+          "dotfiles",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1632700276,
-        "narHash": "sha256-XABvQUq2qv+YcQxW93DnU8mgtVsGJWyhcznny/Lbp0Q=",
+        "lastModified": 1633886330,
+        "narHash": "sha256-gYtHVP8oUSxSX8HxlqqA/YH3yQB9eDNYr1W40r/qVEM=",
         "owner": "berberman",
         "repo": "nvfetcher",
-        "rev": "248fe98ed1bc352ce164d08a9e76fdc5f301ba2d",
+        "rev": "aacf12e7a13edccccaae2259c0f2a7eb34ceda32",
         "type": "github"
       },
       "original": {
