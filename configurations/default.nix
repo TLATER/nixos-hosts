@@ -65,9 +65,15 @@
     pavucontrol # In case the host doesn't have audio, this can't be in the user config
   ];
 
+  environment.extraInit = ''
+    # Do not want this in the environment. NixOS always sets it and does not
+    # provide any option not to, so I must unset it myself via the
+    # environment.extraInit option.
+    unset -v SSH_ASKPASS
+  '';
+
   programs = {
     dconf.enable = true;
-    ssh.askPassword = "";
     zsh.enable = true;
   };
 
