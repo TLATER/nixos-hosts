@@ -15,11 +15,11 @@
         "nvfetcher": "nvfetcher"
       },
       "locked": {
-        "lastModified": 1638977819,
-        "narHash": "sha256-OB2W0f8iXo+IwgS31/cSHv9r3wMv81h6g7Hi4u0VK/o=",
+        "lastModified": 1639788183,
+        "narHash": "sha256-ffWW8AIHfb4rCH0DVUMXsumfUqyXN6vYqMuqAKW+ITo=",
         "owner": "tlater",
         "repo": "dotfiles",
-        "rev": "a5a7e312d337b844af0a5e6d8261ca1254f21e31",
+        "rev": "dafba0c640f4ed2ad4b2d1a23c8fca59d1b92605",
         "type": "github"
       },
       "original": {
@@ -114,11 +114,11 @@
     },
     "nurpkgs": {
       "locked": {
-        "lastModified": 1638650411,
-        "narHash": "sha256-UKXxka5C552sOEdi1l0G6WWJBN8eTbIbX7CUn129qyM=",
+        "lastModified": 1639184008,
+        "narHash": "sha256-NNIlIldMlYJSKRP0KK4CX85ovrJ7FojcrJ7v9T1Zu/M=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "5bcebe807673f07f55f426b9dd944515e6cebef5",
+        "rev": "4edae58ff323bc5912f07a7862968591d4c7461f",
         "type": "github"
       },
       "original": {
@@ -131,11 +131,9 @@
       "inputs": {
         "flake-compat": "flake-compat",
         "flake-utils": [
-          "dotfiles",
           "flake-utils"
         ],
         "nixpkgs": [
-          "dotfiles",
           "nixpkgs"
         ]
       },
