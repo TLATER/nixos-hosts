@@ -28,17 +28,31 @@ jobs:
           git-committer-email: tm@tlater.net
       - name: Build reference pre-update system to compare to
         run: nix build -o before-update .#nixosConfigurations.yui.config.system.build.toplevel
+        # We want to continue even if this errors, because if the
+        # current state fails to build that means one of our inputs
+        # changed a tarball or their mirror disappeared, which the
+        # update is likely to fix.
+        #
+        # This is frequent because elpa doesn't seem to care about
+        # keeping tarballs available.
+        continue-on-error: true
       - name: Update flake inputs
         run: nix flake update
       - name: Build system to compare to pre-update system
         run: nix build -o after-update .#nixosConfigurations.yui.config.system.build.toplevel
       - name: Create version diff
         run: nix run --no-write-lock-file gitlab:khumba/nvd -- diff before-update after-update > version-diff
+        # If we don't have a before-update state, this will fail.
+        continue-on-error: true
       - name: Clean symlinks we don't want to commit
         run: rm before-update after-update
       - name: Commit changes
         run: |
-          git commit -am 'flake.lock: Update' -m '' -m "$(cat version-diff)"
+          if [ -r version-diff ]; then
+              git commit -am 'flake.lock: Update' -m '' -m "$(cat version-diff)"
+          else
+              git commit -am 'flake.lock: Update' -m '' -m 'A dependency project resulted in a non-reproducible build, so version information cannot be shown.'
+          fi
       - name: Clean up uncommitted changes
         run: git clean -fxd
       - uses: peter-evans/create-pull-request@v3
