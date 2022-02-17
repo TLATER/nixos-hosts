@@ -12,20 +12,17 @@ jobs:
         with:
           fetch-depth: 0
           ssh-key: ${{ secrets.PR_CREATE_KEY }}
-      - uses: cachix/install-nix-action@v13
+      - uses: cachix/install-nix-action@v16
         with:
-          install_url: https://nixos-nix-install-tests.cachix.org/serve/i6laym9jw3wg9mw6ncyrk6gjx4l34vvx/install
-          install_options: '--tarball-url-prefix https://nixos-nix-install-tests.cachix.org/serve'
           extra_nix_config: |
-            experimental-features = nix-command flakes
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-      - uses: crazy-max/ghaction-import-gpg@v3
+      - uses: crazy-max/ghaction-import-gpg@v4
         with:
-          gpg-private-key: ${{ secrets.GIT_SIGNING_KEY }}
-          git-user-signingkey: true
-          git-commit-gpgsign: true
-          git-committer-name: GitHub automation
-          git-committer-email: tm@tlater.net
+          gpg_private_key: ${{ secrets.GIT_SIGNING_KEY }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+          git_committer_name: GitHub automation
+          git_committer_email: tm@tlater.net
       - name: Build reference pre-update system to compare to
         run: nix build -o before-update .#nixosConfigurations.yui.config.system.build.toplevel
         # We want to continue even if this errors, because if the
