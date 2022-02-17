@@ -15,15 +15,16 @@
         "nvfetcher": "nvfetcher"
       },
       "locked": {
-        "lastModified": 1645019809,
-        "narHash": "sha256-WhOOMwWjrb3gX44g/prLqsASaUmzR2SSxDM/E/C65kI=",
+        "lastModified": 1645060991,
+        "narHash": "sha256-xWNYeDETlnBT/EzpjAGJZpywxUE2el6CxiApJmCegfU=",
         "owner": "tlater",
         "repo": "dotfiles",
-        "rev": "a6a2988db1537ef3b0eb8f96cc92c8abf142f6b8",
+        "rev": "964a927e073b1afe1d948174685df791a7773545",
         "type": "github"
       },
       "original": {
         "owner": "tlater",
+        "ref": "tlater/fix-elpa-checksums",
         "repo": "dotfiles",
         "type": "github"
       }
