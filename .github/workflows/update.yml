@@ -42,7 +42,7 @@ jobs:
         # If we don't have a before-update state, this will fail.
         continue-on-error: true
       - name: Clean symlinks we don't want to commit
-        run: rm before-update after-update
+        run: rm -f before-update after-update
       - name: Commit changes
         run: |
           if [ -r version-diff ]; then
