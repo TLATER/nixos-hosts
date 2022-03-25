@@ -1,7 +1,10 @@
-{ pkgs, lib, inputs, ... }:
-
 {
-  imports = [ ./hardware-configuration.nix ../bluetooth.nix ../wifi.nix ];
+  pkgs,
+  lib,
+  inputs,
+  ...
+}: {
+  imports = [./hardware-configuration.nix ../bluetooth.nix ../wifi.nix];
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (pkgs.lib.getName pkg) [
@@ -20,7 +23,7 @@
     ];
 
     initrd = {
-      availableKernelModules = [ "hid_roccat_ryos" ];
+      availableKernelModules = ["hid_roccat_ryos"];
       luks.devices = {
         root.device = "/dev/disk/by-uuid/3c0d48f6-f051-4328-9919-677a7fcddae7";
         storage = {
@@ -38,13 +41,13 @@
       wlp6s0.useDHCP = true;
     };
 
-    wireless.interfaces = [ "wlp6s0" ];
+    wireless.interfaces = ["wlp6s0"];
 
     # Allow barrier
-    firewall.allowedTCPPorts = [ 24800 ];
+    firewall.allowedTCPPorts = [24800];
   };
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = ["nvidia"];
 
   hardware = {
     nvidia.modesetting.enable = true;

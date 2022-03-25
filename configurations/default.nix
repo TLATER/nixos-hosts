@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
-  imports = [ ./pipewire.nix ];
+{pkgs, ...}: {
+  imports = [./pipewire.nix];
 
   nix = {
     package = pkgs.nixFlakes;
@@ -18,7 +16,7 @@
   sops = {
     gnupg = {
       home = "/var/lib/sops";
-      sshKeyPaths = [ ];
+      sshKeyPaths = [];
     };
 
     defaultSopsFile = "/etc/sops/secrets.yaml";
@@ -44,7 +42,7 @@
     };
   };
 
-  fileSystems = { "/nix".options = [ "defaults" "noatime" ]; };
+  fileSystems = {"/nix".options = ["defaults" "noatime"];};
   networking.useDHCP = false;
   time.timeZone = "Europe/London";
 
@@ -53,7 +51,7 @@
     users = {
       tlater = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "video" ];
+        extraGroups = ["wheel" "video"];
       };
     };
   };
@@ -80,20 +78,20 @@
   fonts = {
     enableDefaultFonts = true;
 
-    fonts = with pkgs; [ hack-font noto-fonts noto-fonts-cjk noto-fonts-emoji ];
+    fonts = with pkgs; [hack-font noto-fonts noto-fonts-cjk noto-fonts-emoji];
 
     fontconfig = {
       defaultFonts = {
-        serif = [ "NotoSerif" ];
-        sansSerif = [ "NotoSans" ];
-        monospace = [ "Hack" ];
+        serif = ["NotoSerif"];
+        sansSerif = ["NotoSans"];
+        monospace = ["Hack"];
       };
     };
   };
 
   systemd = {
     # See NixOS/nixpkgs#116631
-    tmpfiles.rules = [ "d /run/lightdm 0711 lightdm lightdm -" ];
+    tmpfiles.rules = ["d /run/lightdm 0711 lightdm lightdm -"];
 
     # My systems never have usable root accounts anyway, so emergency
     # mode just drops into a shell telling me it can't log into root
@@ -129,7 +127,7 @@
       };
     };
 
-    udev.packages = with pkgs; [ yubikey-personalization ];
+    udev.packages = with pkgs; [yubikey-personalization];
 
     chrony.enable = true;
     pcscd.enable = true;
@@ -140,7 +138,7 @@
 
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
   };
 
   system.stateVersion = "20.09";

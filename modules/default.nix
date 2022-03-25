@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-
 {
+  lib,
+  pkgs,
+  config,
+  ...
+}: {
   imports = [
     ./hardware/pulseaudio/echo-canceling.nix
     ./hardware/pulseaudio/rnnoise-suppression.nix

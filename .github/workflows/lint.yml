@@ -12,7 +12,12 @@ jobs:
         with:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-      - run: find . -name '*.nix' ! -name 'hardware-configuration.nix' -exec nix run nixpkgs#nixfmt -- -c {} +
+      - run: |
+          nix run github:kamadorueda/alejandra/1.1.0 -- \
+              --check \
+              --exclude ./configurations/yui/hardware-configuration.nix \
+              --exclude ./configurations/ct-lt-02052/hardware-configuration.nix \
+              .
 
   check:
     name: Check nix correctness

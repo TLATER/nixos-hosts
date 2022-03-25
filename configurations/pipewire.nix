@@ -1,6 +1,8 @@
-{ pkgs, config, ... }:
-
 {
+  pkgs,
+  config,
+  ...
+}: {
   # Recommended, presumably because it handles the permission stuff
   # for screen recordings and such.
   security.rtkit.enable = true;

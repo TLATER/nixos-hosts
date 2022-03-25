@@ -1,9 +1,10 @@
-{ config, lib, ... }:
-
-with lib;
-
-let cfg = config.hardware.pulseaudio.echo-canceling;
-
+{
+  config,
+  lib,
+  ...
+}:
+with lib; let
+  cfg = config.hardware.pulseaudio.echo-canceling;
 in {
   options.hardware.pulseaudio.echo-canceling = {
     enable = mkEnableOption {
@@ -77,13 +78,11 @@ in {
     };
   };
 
-  config = (mkIf cfg.enable {
-    hardware.pulseaudio.extraConfig =
-      assert asserts.assertMsg (cfg.source != null)
-        "A source is required for echo cancellation";
-      let
-        aec-args = builtins.concatStringsSep " " cfg.aec-args;
-        module-args = builtins.concatStringsSep " " ([
+  config = mkIf cfg.enable {
+    hardware.pulseaudio.extraConfig = assert asserts.assertMsg (cfg.source != null)
+    "A source is required for echo cancellation"; let
+      aec-args = builtins.concatStringsSep " " cfg.aec-args;
+      module-args = builtins.concatStringsSep " " ([
           "use_master_format=1"
           "aec_method=${cfg.aec-method}"
           ''aec_args="${aec-args}"''
@@ -91,13 +90,15 @@ in {
           ''source_master="${cfg.source}"''
           ''source_name="${cfg.source}.echo-cancel"''
           ''source_properties="device.description='Echo\-Canceled Input'"''
-        ] ++ (if cfg.sink != null then
-          [ ''sink_master="${cfg.sink}"'' ]
-        else
-          [ ]));
-      in ''
-        # Enable echo cancellation
-        load-module module-echo-cancel ${module-args}
-      '';
-  });
+        ]
+        ++ (
+          if cfg.sink != null
+          then [''sink_master="${cfg.sink}"'']
+          else []
+        ));
+    in ''
+      # Enable echo cancellation
+      load-module module-echo-cancel ${module-args}
+    '';
+  };
 }

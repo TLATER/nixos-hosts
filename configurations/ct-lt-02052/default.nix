@@ -1,14 +1,10 @@
-{ pkgs, ... }:
-
-{
-  imports =
-    [ ./hardware-configuration.nix ../bluetooth.nix ../power.nix ../wifi.nix ];
+{pkgs, ...}: {
+  imports = [./hardware-configuration.nix ../bluetooth.nix ../power.nix ../wifi.nix];
 
   boot.initrd = {
-    availableKernelModules = [ "hid_roccat_ryos" ];
+    availableKernelModules = ["hid_roccat_ryos"];
 
-    luks.devices.root.device =
-      "/dev/disk/by-uuid/b3ac7dc6-cb0b-4350-bdfb-32329a5f61ff";
+    luks.devices.root.device = "/dev/disk/by-uuid/b3ac7dc6-cb0b-4350-bdfb-32329a5f61ff";
   };
 
   networking = {
@@ -17,14 +13,14 @@
       enp0s31f6.useDHCP = true;
       wlp0s20f3.useDHCP = true;
     };
-    wireless.interfaces = [ "wlp0s20f3" ];
+    wireless.interfaces = ["wlp0s20f3"];
   };
 
   sops.secrets = {
-    codethink-vpn-ca = { };
-    codethink-vpn-cert = { };
-    codethink-vpn-key = { };
-    codethink-vpn-static-key = { };
+    codethink-vpn-ca = {};
+    codethink-vpn-cert = {};
+    codethink-vpn-key = {};
+    codethink-vpn-static-key = {};
   };
 
   services.openvpn = {
@@ -65,12 +61,12 @@
     docker.enable = true;
     libvirtd.enable = true;
   };
-  users.users.tlater.extraGroups = [ "docker" "libvirtd" ];
+  users.users.tlater.extraGroups = ["docker" "libvirtd"];
 
   hardware.cpu.intel.updateMicrocode = true;
-  security.pki.certificates = [ (builtins.readFile ./codethink-wifi.cert) ];
+  security.pki.certificates = [(builtins.readFile ./codethink-wifi.cert)];
 
   nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (pkgs.lib.getName pkg) [ "steam-original" ];
+    builtins.elem (pkgs.lib.getName pkg) ["steam-original"];
   hardware.steam-hardware.enable = true;
 }

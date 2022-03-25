@@ -22,31 +22,41 @@
     };
   };
 
-  outputs = { nixpkgs, nixos-hardware, flake-utils, sops-nix, home-manager
-    , dotfiles, ... }:
-    let
-      # A helper function that removes the duplication of things that
-      # will be common across all hosts.
-      make-nixos-system = { nixpkgs, system, modules ? [ ] }:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
+  outputs = {
+    nixpkgs,
+    nixos-hardware,
+    flake-utils,
+    sops-nix,
+    home-manager,
+    dotfiles,
+    ...
+  }: let
+    # A helper function that removes the duplication of things that
+    # will be common across all hosts.
+    make-nixos-system = {
+      nixpkgs,
+      system,
+      modules ? [],
+    }: let
+      pkgs = nixpkgs.legacyPackages.${system};
 
-          # Overlays to be added to the system
-          overlays =
-            [ (final: prev: { tlater = (import ./pkgs { pkgs = prev; }); }) ];
-        in nixpkgs.lib.nixosSystem {
-          inherit system;
+      # Overlays to be added to the system
+      overlays = [(final: prev: {tlater = import ./pkgs {pkgs = prev;};})];
+    in
+      nixpkgs.lib.nixosSystem {
+        inherit system;
 
-          # The configuration modules
-          modules = [
+        # The configuration modules
+        modules =
+          [
             (import ./configurations)
             sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
 
-            ({ ... }: {
+            ({...}: {
               # Use the flakes' nixpkgs for commands
               nix = {
-                nixPath = [ "nixpkgs=${nixpkgs}" ];
+                nixPath = ["nixpkgs=${nixpkgs}"];
                 registry.nixpkgs = {
                   from = {
                     id = "nixpkgs";
@@ -58,13 +68,14 @@
 
               nixpkgs.overlays = overlays;
             })
-          ] ++ modules;
+          ]
+          ++ modules;
 
-          # Additional modules with custom configuration options
-          extraModules = [ (import ./modules) ];
-        };
-
-    in {
+        # Additional modules with custom configuration options
+        extraModules = [(import ./modules)];
+      };
+  in
+    {
       nixosConfigurations = {
         yui = make-nixos-system {
           nixpkgs = nixpkgs;
@@ -93,19 +104,18 @@
     // (flake-utils.lib.eachSystem
       # Sops currently doesn't support aarch64-darwin
       (builtins.filter (system: system != "aarch64-darwin")
-        flake-utils.lib.defaultSystems) (system:
-          let
-            pkgs = nixpkgs.legacyPackages.${system};
-            sops-pkgs = sops-nix.packages.${system};
-          in {
-            devShell = pkgs.mkShell {
-              buildInputs = with pkgs;
-                with sops-pkgs; [
-                  nixfmt
-                  sops-init-gpg-key
-                ];
-              nativeBuildInputs = with sops-pkgs; [ sops-import-keys-hook ];
-              sopsPGPKeyDirs = [ "./keys/hosts/" "./keys/users/" ];
-            };
-          }));
+        flake-utils.lib.defaultSystems) (system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+        sops-pkgs = sops-nix.packages.${system};
+      in {
+        devShell = pkgs.mkShell {
+          buildInputs = with pkgs;
+          with sops-pkgs; [
+            nixfmt
+            sops-init-gpg-key
+          ];
+          nativeBuildInputs = with sops-pkgs; [sops-import-keys-hook];
+          sopsPGPKeyDirs = ["./keys/hosts/" "./keys/users/"];
+        };
+      }));
 }
