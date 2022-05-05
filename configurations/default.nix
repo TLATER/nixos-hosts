@@ -122,7 +122,24 @@
       };
     };
 
-    udev.packages = with pkgs; [yubikey-personalization];
+    udev = {
+      extraHwdb = ''
+        # Rebind the Xtrfy thumb buttons. Hardware properties:
+        #   - Bus ID: 0003
+        #   - Vendor ID: 25a7
+        #   - Product ID: pfa92|9
+        #     - 2 == mouse without receiver
+        #     - 9 == mouse with receiver
+        #   - Key up: 90005
+        #   - Key down: 90005
+         evdev:input:b0003v25a7pfa9[29]*
+          # The up button
+          KEYBOARD_KEY_90005=volumeup
+          # The down button
+          KEYBOARD_KEY_90004=volumedown
+      '';
+      packages = with pkgs; [yubikey-personalization];
+    };
 
     chrony.enable = true;
     pcscd.enable = true;
