@@ -48,7 +48,12 @@
   };
 
   fileSystems = {"/nix".options = ["defaults" "noatime"];};
-  networking.useDHCP = false;
+  networking = {
+    useDHCP = false;
+    hosts = {
+      "127.0.0.1" = ["modules-cdn.eac-prod.on.epicgames.com"];
+    };
+  };
   time.timeZone = "Europe/London";
 
   users = {
