@@ -2,7 +2,7 @@
   description = "tlater's host configurations";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-21.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-22.05";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     flake-utils.url = "github:numtide/flake-utils";
     sops-nix = {
@@ -11,7 +11,7 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-21.11";
+      url = "github:nix-community/home-manager/release-22.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     dotfiles = {
@@ -102,13 +102,13 @@
     }
     # Set up a "dev shell" that will work on all architectures.
     // (flake-utils.lib.eachSystem
-      # Sops currently doesn't support aarch64-darwin
-      (builtins.filter (system: system != "aarch64-darwin")
+      # Sops currently doesn't support aarch64-darwin or i686-linux
+      (builtins.filter (system: !(builtins.elem system ["aarch64-darwin" "i686-linux"]))
         flake-utils.lib.defaultSystems) (system: let
         pkgs = nixpkgs.legacyPackages.${system};
         sops-pkgs = sops-nix.packages.${system};
       in {
-        devShell = pkgs.mkShell {
+        devShells.default = pkgs.mkShell {
           buildInputs = with pkgs;
           with sops-pkgs; [
             nixfmt

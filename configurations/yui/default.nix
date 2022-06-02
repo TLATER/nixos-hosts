@@ -54,4 +54,8 @@
     steam-hardware.enable = true;
     cpu.amd.updateMicrocode = true;
   };
+
+  # Necessary to correctly enable va-api (video codec hardware
+  # acceleration)
+  environment.variables.LIBVA_DRIVER_NAME = "nvidia";
 }
