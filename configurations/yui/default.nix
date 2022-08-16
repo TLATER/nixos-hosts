@@ -58,4 +58,8 @@
   # Necessary to correctly enable va-api (video codec hardware
   # acceleration)
   environment.variables.LIBVA_DRIVER_NAME = "nvidia";
+
+  # For random android-related things
+  programs.adb.enable = true;
+  users.users.tlater.extraGroups = ["adbusers"];
 }
