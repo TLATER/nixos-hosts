@@ -141,5 +141,8 @@
     extraPortals = [pkgs.xdg-desktop-portal-gtk];
   };
 
+  # Necessary for opening links in gnome under certain conditions
+  services.gvfs.enable = true;
+
   system.stateVersion = "20.09";
 }
