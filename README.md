@@ -1,5 +1,26 @@
 # NixOS host configuration
 
+> **Warning**
+> This was abandoned in favor of [https://github.com/TLATER/dotfiles](https://github.com/TLATER/dotfiles).
+>
+> Previously I split the repositories in two, thinking that:
+>   1. I would struggle to preserve my dotfiles from before nix
+>   2. Splitting would enable me to use home-manager on non-NixOS hosts more easily
+>
+> Since then I have learned a *lot* about nix and found that:
+>   1. Preserving my old dotfiles is trivial
+>   2. Flakes mean I do not need to split the repository in two to achieve configuration on non-NixOS
+>
+> Having the repository split in two also caused no end of headaches
+> with `nix flake update`, which I would have to run in both
+> repositories separately and somehow still make feed into one
+> another. All checks and update scripts also required writing twice.
+>
+> I would not recommend doing what I did here, but I'll keep it around
+> because many people seemed to be interested in the past. Look into
+> my dotfiles repository if you'd like to see what I consider good
+> practice these days.
+
 This is the collected set of configurations for my various NixOS
 hosts.
 
